@@ -87,7 +87,9 @@ class Environment(abc.ABC):
                 if path not in sys.path:
                     sys.path.append(path)
 
-        major, minor, patch = [int(x) for x in duckdb.__version__.split(".")]
+        major, minor = [int(x) for x in duckdb.__version__.split(".")[:2]]
+        patch = int(duckdb.__version__.split(".")[2].split("-")[0])
+
         if major == 0 and (minor < 10 or (minor == 10 and patch == 0)):
             self._supports_comments = False
         else:
